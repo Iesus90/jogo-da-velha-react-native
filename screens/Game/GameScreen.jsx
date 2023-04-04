@@ -18,6 +18,8 @@ import {
   BackgroundButton,
   RestartGameButton,
   TextButton,
+  TextWinner,
+  TextTier,
 } from './styles';
 
 const GameScreen = ({route}) => {
@@ -106,7 +108,7 @@ const GameScreen = ({route}) => {
           <TitleModal>
             {checkWinnerOrTie() === 'X' ? player1 : player2}
           </TitleModal>
-          <TitleWinner>Venceu !!</TitleWinner>
+          <TextWinner source={require('../../shared/venceu.png')} />
           <RestartGameButton
             onPress={() => {
               setModalWinnerVisible(false);
@@ -126,7 +128,7 @@ const GameScreen = ({route}) => {
           setModalTierVisible(!modalTierVisible);
         }}>
         <ContainerModal>
-          <TitleWinner>Deu Empate !!</TitleWinner>
+          <TextTier source={require('../../shared/empate.png')} />
           <RestartGameButton
             onPress={() => {
               setModalTierVisible(false);

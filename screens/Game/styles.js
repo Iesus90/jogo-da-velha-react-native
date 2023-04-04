@@ -122,3 +122,19 @@ export const TextButton = styled(Image).attrs({
   height: ${heightPixel(100)}px;
   width: ${widthPixel(200)}px;
 `;
+
+export const TextWinner = styled(Image).attrs({
+  resizeMode: 'contain',
+})`
+  margin: 0 ${pixelSizeHorizontal(20)}px 0 ${pixelSizeHorizontal(20)}px;
+  height: ${heightPixel(100)}px;
+  width: ${widthPixel(200)}px;
+`;
+
+export const TextTier = styled(Image).attrs({
+  resizeMode: 'contain',
+})`
+  margin: 0 ${pixelSizeHorizontal(20)}px 0 ${pixelSizeHorizontal(20)}px;
+  height: ${heightPixel(150)}px;
+  width: ${widthPixel(250)}px;
+`;
