@@ -1,5 +1,8 @@
 import React, {useState, useEffect} from 'react';
 import {SafeAreaView} from 'react-native';
+import {checkWinnerOrTie} from '../../utils/checkWinnerOrTie';
+import ModalWinner from '../../components/ModalWinner/ModalWinner';
+import ModalTier from '../../components/ModalTier/ModalTier';
 import {
   ContainerScoreboard,
   BackGame,
@@ -11,15 +14,6 @@ import {
   ContainerGame,
   ContainerGrid,
   Grid,
-  ModalWinner,
-  ContainerModal,
-  TitleModal,
-  TitleWinner,
-  BackgroundButton,
-  RestartGameButton,
-  TextButton,
-  TextWinner,
-  TextTier,
 } from './styles';
 
 const GameScreen = ({route}) => {
@@ -33,12 +27,15 @@ const GameScreen = ({route}) => {
   const {player1, player2} = route.params;
 
   useEffect(() => {
-    checkWinnerOrTie();
-    if (checkWinnerOrTie() !== null || checkWinnerOrTie() !== 'tier') {
-      if (checkWinnerOrTie() === 'X') {
+    checkWinnerOrTie(cells);
+    if (
+      checkWinnerOrTie(cells) !== null ||
+      checkWinnerOrTie(cells) !== 'tier'
+    ) {
+      if (checkWinnerOrTie(cells) === 'X') {
         setScoreX(scoreX + 1);
         setModalWinnerVisible(true);
-      } else if (checkWinnerOrTie() === 'O') {
+      } else if (checkWinnerOrTie(cells) === 'O') {
         setScoreO(scoreO + 1);
         setModalWinnerVisible(true);
       }
@@ -58,88 +55,21 @@ const GameScreen = ({route}) => {
     setCurrentPlayer(currentPlayer === 'X' ? 'O' : 'X');
   };
 
-  const checkWinnerOrTie = () => {
-    const lines = [
-      [0, 1, 2],
-      [3, 4, 5],
-      [6, 7, 8],
-      [0, 3, 6],
-      [1, 4, 7],
-      [2, 5, 8],
-      [0, 4, 8],
-      [2, 4, 6],
-    ];
-
-    for (let i = 0; i < lines.length; i++) {
-      const [a, b, c] = lines[i];
-      if (cells[a] && cells[a] === cells[b] && cells[a] === cells[c]) {
-        return cells[a];
-      }
-    }
-
-    if (cells.every(cell => cell !== null)) {
-      return 'tie';
-    }
-
-    return null;
-  };
-
   return (
     <SafeAreaView style={{flex: 1}}>
       <ModalWinner
-        animationType="slide"
-        transparent={true}
-        visible={modalWinnerVisible}
-        onRequestClose={() => {
-          setModalWinnerVisible(!modalWinnerVisible);
-        }}>
-        <ContainerModal>
-          {checkWinnerOrTie() === 'X' ? (
-            <PlayerIcon
-              sizeHeight={100}
-              source={require('../../shared/X.png')}
-            />
-          ) : (
-            <PlayerIcon
-              sizeHeight={100}
-              source={require('../../shared/O.png')}
-            />
-          )}
-          <TitleModal>
-            {checkWinnerOrTie() === 'X' ? player1 : player2}
-          </TitleModal>
-          <TextWinner source={require('../../shared/venceu.png')} />
-          <RestartGameButton
-            onPress={() => {
-              setModalWinnerVisible(false);
-              setCells(Array(9).fill(null));
-            }}>
-            <BackgroundButton>
-              <TextButton source={require('../../shared/reiniciar.png')} />
-            </BackgroundButton>
-          </RestartGameButton>
-        </ContainerModal>
-      </ModalWinner>
-      <ModalWinner
-        animationType="slide"
-        transparent={true}
-        visible={modalTierVisible}
-        onRequestClose={() => {
-          setModalTierVisible(!modalTierVisible);
-        }}>
-        <ContainerModal>
-          <TextTier source={require('../../shared/empate.png')} />
-          <RestartGameButton
-            onPress={() => {
-              setModalTierVisible(false);
-              setCells(Array(9).fill(null));
-            }}>
-            <BackgroundButton>
-              <TextButton source={require('../../shared/reiniciar.png')} />
-            </BackgroundButton>
-          </RestartGameButton>
-        </ContainerModal>
-      </ModalWinner>
+        player1={player1}
+        player2={player2}
+        cells={cells}
+        setCells={setCells}
+        modalWinnerVisible={modalWinnerVisible}
+        setModalWinnerVisible={setModalWinnerVisible}
+      />
+      <ModalTier
+        setCells={setCells}
+        modalTierVisible={modalTierVisible}
+        setModalTierVisible={setModalTierVisible}
+      />
       <BackGame>
         <ContainerScoreboard>
           <Scoreboard>
@@ -169,7 +99,7 @@ const GameScreen = ({route}) => {
               <Grid
                 key={index}
                 onPress={() => handleCellPress(index)}
-                disabled={checkWinnerOrTie() !== null}
+                disabled={checkWinnerOrTie(cells) !== null}
                 player={player}
                 winner={winner && winner.includes(index)}>
                 {cells[index] !== null ? (
