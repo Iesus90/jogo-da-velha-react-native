@@ -25,6 +25,7 @@ export const Scoreboard = styled.View`
 
 export const ContainerName = styled.View`
   align-items: center;
+  flex-wrap: nowrap;
 `;
 
 export const Score = styled.Text`

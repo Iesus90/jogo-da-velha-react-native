@@ -75,7 +75,7 @@ const GameScreen = ({route}) => {
           <Scoreboard>
             <ContainerName>
               <Score>{scoreX}</Score>
-              <Title>{player1}</Title>
+              <Title numberOfLines={1}>{player1}</Title>
               <PlayerIcon
                 sizeHeight={50}
                 source={require('../../shared/X.png')}
@@ -85,7 +85,7 @@ const GameScreen = ({route}) => {
           <Scoreboard>
             <ContainerName>
               <Score>{scoreO}</Score>
-              <Title>{player2}</Title>
+              <Title numberOfLines={1}>{player2}</Title>
               <PlayerIcon
                 sizeHeight={50}
                 source={require('../../shared/O.png')}
