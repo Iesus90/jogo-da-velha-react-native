@@ -1,12 +1,6 @@
+import P from 'prop-types';
 import React from 'react';
-import {
-  Tier,
-  ContainerModal,
-  BackgroundButton,
-  RestartGameButton,
-  TextButton,
-  TextTier,
-} from './styles';
+import {Tier, ContainerModal, BackgroundButton, RestartGameButton, TextButton, TextTier} from './styles';
 
 const ModalTier = ({setCells, modalTierVisible, setModalTierVisible}) => {
   return (
@@ -31,6 +25,12 @@ const ModalTier = ({setCells, modalTierVisible, setModalTierVisible}) => {
       </ContainerModal>
     </Tier>
   );
+};
+
+ModalTier.propTypes = {
+  setCells: P.func.isRequired,
+  modalTierVisible: P.bool.isRequired,
+  setModalTierVisible: P.func.isRequired,
 };
 
 export default ModalTier;

@@ -1,3 +1,4 @@
+import P from 'prop-types';
 import React, {useState, useEffect} from 'react';
 import {SafeAreaView} from 'react-native';
 import {checkWinnerOrTie} from '../../utils/checkWinnerOrTie';
@@ -19,7 +20,7 @@ import {
 const GameScreen = ({route}) => {
   const [cells, setCells] = useState(Array(9).fill(null));
   const [currentPlayer, setCurrentPlayer] = useState('X');
-  const [winner, setWinner] = useState(null);
+  const [winner] = useState(null);
   const [scoreX, setScoreX] = useState(0);
   const [scoreO, setScoreO] = useState(0);
   const [modalWinnerVisible, setModalWinnerVisible] = useState(false);
@@ -28,10 +29,7 @@ const GameScreen = ({route}) => {
 
   useEffect(() => {
     checkWinnerOrTie(cells);
-    if (
-      checkWinnerOrTie(cells) !== null ||
-      checkWinnerOrTie(cells) !== 'tier'
-    ) {
+    if (checkWinnerOrTie(cells) !== null || checkWinnerOrTie(cells) !== 'tier') {
       if (checkWinnerOrTie(cells) === 'X') {
         setScoreX(scoreX + 1);
         setModalWinnerVisible(true);
@@ -65,31 +63,21 @@ const GameScreen = ({route}) => {
         modalWinnerVisible={modalWinnerVisible}
         setModalWinnerVisible={setModalWinnerVisible}
       />
-      <ModalTier
-        setCells={setCells}
-        modalTierVisible={modalTierVisible}
-        setModalTierVisible={setModalTierVisible}
-      />
+      <ModalTier setCells={setCells} modalTierVisible={modalTierVisible} setModalTierVisible={setModalTierVisible} />
       <BackGame>
         <ContainerScoreboard>
           <Scoreboard>
             <ContainerName>
               <Score>{scoreX}</Score>
               <Title numberOfLines={1}>{player1}</Title>
-              <PlayerIcon
-                sizeHeight={50}
-                source={require('../../shared/X.png')}
-              />
+              <PlayerIcon sizeHeight={50} source={require('../../shared/X.png')} />
             </ContainerName>
           </Scoreboard>
           <Scoreboard>
             <ContainerName>
               <Score>{scoreO}</Score>
               <Title numberOfLines={1}>{player2}</Title>
-              <PlayerIcon
-                sizeHeight={50}
-                source={require('../../shared/O.png')}
-              />
+              <PlayerIcon sizeHeight={50} source={require('../../shared/O.png')} />
             </ContainerName>
           </Scoreboard>
         </ContainerScoreboard>
@@ -105,11 +93,7 @@ const GameScreen = ({route}) => {
                 {cells[index] !== null ? (
                   <PlayerIcon
                     sizeHeight={70}
-                    source={
-                      cells[index] === 'X'
-                        ? require('../../shared/X.png')
-                        : require('../../shared/O.png')
-                    }
+                    source={cells[index] === 'X' ? require('../../shared/X.png') : require('../../shared/O.png')}
                   />
                 ) : null}
               </Grid>
@@ -119,6 +103,10 @@ const GameScreen = ({route}) => {
       </BackGame>
     </SafeAreaView>
   );
+};
+
+GameScreen.propTypes = {
+  route: P.object.isRequired,
 };
 
 export default GameScreen;

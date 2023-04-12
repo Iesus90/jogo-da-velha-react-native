@@ -1,13 +1,7 @@
 import styled from 'styled-components/native';
 import {Image} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
-import {
-  widthPixel,
-  heightPixel,
-  fontPixel,
-  pixelSizeVertical,
-  pixelSizeHorizontal,
-} from '../../utils/dimensions';
+import {widthPixel, heightPixel, fontPixel, pixelSizeVertical, pixelSizeHorizontal} from '../../utils/dimensions';
 
 export const ContainerScoreboard = styled.View`
   justify-content: space-evenly;
@@ -43,8 +37,7 @@ export const Title = styled.Text`
 export const PlayerIcon = styled(Image).attrs({
   resizeMode: 'contain',
 })`
-  height: ${props =>
-    props.sizeHeight ? heightPixel(props.sizeHeight) : heightPixel(0)}px;
+  height: ${props => (props.sizeHeight ? heightPixel(props.sizeHeight) : heightPixel(0))}px;
 `;
 
 export const ContainerGame = styled.View`

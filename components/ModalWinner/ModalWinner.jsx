@@ -1,3 +1,4 @@
+import P from 'prop-types';
 import React from 'react';
 import {checkWinnerOrTie} from '../../utils/checkWinnerOrTie';
 import {
@@ -5,22 +6,13 @@ import {
   ContainerModal,
   PlayerIcon,
   TitleModal,
-  TitleWinner,
   BackgroundButton,
   RestartGameButton,
   TextButton,
   TextWinner,
-  TextTier,
 } from './styles';
 
-const ModalWinner = ({
-  player1,
-  player2,
-  cells,
-  setCells,
-  modalWinnerVisible,
-  setModalWinnerVisible,
-}) => {
+const ModalWinner = ({player1, player2, cells, setCells, modalWinnerVisible, setModalWinnerVisible}) => {
   return (
     <Winner
       animationType="slide"
@@ -35,9 +27,7 @@ const ModalWinner = ({
         ) : (
           <PlayerIcon sizeHeight={100} source={require('../../shared/O.png')} />
         )}
-        <TitleModal>
-          {checkWinnerOrTie(cells) === 'X' ? player1 : player2}
-        </TitleModal>
+        <TitleModal>{checkWinnerOrTie(cells) === 'X' ? player1 : player2}</TitleModal>
         <TextWinner source={require('../../shared/venceu.png')} />
         <RestartGameButton
           onPress={() => {
@@ -51,6 +41,15 @@ const ModalWinner = ({
       </ContainerModal>
     </Winner>
   );
+};
+
+ModalWinner.propTypes = {
+  player1: P.string.isRequired,
+  player2: P.string.isRequired,
+  cells: P.array.isRequired,
+  setCells: P.func.isRequired,
+  modalWinnerVisible: P.bool.isRequired,
+  setModalWinnerVisible: P.func.isRequired,
 };
 
 export default ModalWinner;
